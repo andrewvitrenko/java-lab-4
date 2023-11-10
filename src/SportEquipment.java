@@ -1,5 +1,4 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.UUID;
 
 enum SportEquipmentType {
     DUMB_BELL,
@@ -8,23 +7,35 @@ enum SportEquipmentType {
 }
 
 public class SportEquipment {
-    public static final String DATE_FORMAT = "yyy-MM-dd 'at' hh:mm:ss";
-
+    /**
+     * Price paid for equipment
+     */
     double cost;
-    String dateDelivered;
+    /**
+     * Number of items provided
+     */
     int amount;
     SportEquipmentType type;
+    /**
+     * Max weight for one item
+    */
     double maxWeight;
     String name;
+    /**
+     * Unique id, uuid v4
+    */
+    String id;
+
     SportEquipment(String name, double cost, int amount, SportEquipmentType type, double maxWeight) {
         this.amount = amount;
         this.name = name;
         this.cost = cost;
         this.type = type;
         this.maxWeight = maxWeight;
+        this.id = UUID.randomUUID().toString();
+    }
 
-        SimpleDateFormat formatter = new SimpleDateFormat(SportEquipment.DATE_FORMAT);
-        Date date = new Date();
-        this.dateDelivered = formatter.format(date);
+    public String toString() {
+        return this.id + " " + this.name;
     }
 }

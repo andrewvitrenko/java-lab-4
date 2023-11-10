@@ -5,12 +5,10 @@ public class Main {
         SportEquipment[] sportEquipments = Main.getEquipment();
 
         SportEquipment[] sortedByName = Main.sortByName(sportEquipments);
-        String[] names = Arrays.stream(sortedByName).map(item -> item.name).toArray(String[]::new);
-        System.out.println("names - " + Arrays.toString(names));
+        System.out.println("names - " + Arrays.toString(sortedByName));
 
-        SportEquipment[] sortedByDate = Main.sortByDateDelivered(sportEquipments);
-        String[] dates = Arrays.stream(sortedByDate).map(item -> item.dateDelivered).toArray(String[]::new);
-        System.out.println("dates - " + Arrays.toString(dates));
+        SportEquipment[] sortedById = Main.sortById(sportEquipments);
+        System.out.println("ids - " + Arrays.toString(sortedById));
     }
 
     public static SportEquipment[] sortByName(SportEquipment[] source) {
@@ -20,13 +18,16 @@ public class Main {
         return copy;
     }
 
-    public static SportEquipment[] sortByDateDelivered(SportEquipment[] source) {
+    public static SportEquipment[] sortById(SportEquipment[] source) {
         SportEquipment[] copy = source.clone();
-        Arrays.sort(copy, new SortByDate());
+        Arrays.sort(copy, new SortById());
 
         return copy;
     }
 
+    /**
+     * Generates demo data for lab
+     */
     private static SportEquipment[] getEquipment() {
         SportEquipmentType[] types = SportEquipmentType.values();
 
@@ -37,12 +38,6 @@ public class Main {
             double cost = Math.random() * 500;
             int amount = (int) (Math.random() * 50);
             double maxWeight = Math.random() * 1000;
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
 
             equipment[i] = new SportEquipment(name, cost, amount, types[i], maxWeight);
         }
